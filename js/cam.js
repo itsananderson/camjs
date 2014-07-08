@@ -49,9 +49,20 @@
                     .addClass( 'viewport' )
                 .appendTo( $cam_box );
 
-                    $cam_img = $( '<img>' ) 
-                        .attr( 'src', camera.url + camera.stream_route )
-                    .appendTo( $cam_viewport );
+                $cam_img = $( '<img>' ) 
+                    //.attr( 'src', camera.url + camera.stream_route )
+                .appendTo( $cam_viewport );
+
+
+                function updateImage() {
+                    console.log('loading');
+                    $cam_img.attr('src', camera.url + camera.stream_route + 'random=' + Math.random())
+                        .one('load', function() {
+                            console.log('here' + $cam_img.attr('src'));
+                            setTimeout(updateImage, 100);
+                        });
+                }
+                updateImage();
 
                 $control_box = $( '<div>' )
                     .addClass( 'bar' )
